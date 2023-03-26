@@ -1,34 +1,24 @@
 package hexlet.code.schemas;
 
-import hexlet.code.rules.ContainsRule;
-import hexlet.code.rules.IRule;
-import hexlet.code.rules.MinLengthRule;
-import hexlet.code.rules.RequiredRule;
+import java.util.function.Predicate;
 
-public final class StringSchema extends AbstractSchema {
-
-    @Override
-    public boolean isValid(Object o) {
-        for (IRule rule : getRules()) {
-            if (!rule.validate(o)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
+public final class StringSchema extends BaseSchema {
     public StringSchema required() {
-        addRule(new RequiredRule());
+        setIsRequiredOn();
+        Predicate<Object> required = o -> o instanceof String s && !s.isEmpty();
+        addRule(required);
         return this;
     }
 
     public StringSchema minLength(int length) {
-        addRule(new MinLengthRule(length));
+        Predicate<Object> minLengthRule = o -> o instanceof String s && s.length() >= length;
+        addRule(minLengthRule);
         return this;
     }
 
     public StringSchema contains(String substring) {
-        addRule(new ContainsRule(substring));
+        Predicate<Object> contains = o -> o instanceof String s && s.contains(substring);
+        addRule(contains);
         return this;
     }
 }
