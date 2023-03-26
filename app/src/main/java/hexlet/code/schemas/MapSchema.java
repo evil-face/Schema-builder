@@ -16,4 +16,19 @@ public final class MapSchema extends BaseSchema {
         addRule(sizeOf);
         return this;
     }
+
+    public MapSchema shape(Map<String, BaseSchema> shapeRules) {
+        if (shapeRules == null) {
+            return this;
+        }
+
+        for (var ruleSet : shapeRules.entrySet()) {
+            String name = ruleSet.getKey();
+            BaseSchema rule = ruleSet.getValue();
+            Predicate<Object> shape = o -> o instanceof Map m && rule.isValid(m.get(name));
+            addRule(shape);
+        }
+
+        return this;
+    }
 }
