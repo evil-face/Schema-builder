@@ -72,7 +72,7 @@ public final class MapSchemaTest {
 
     @Test
     public void mapSchemaTestSizeOfCase() {
-        mapSchema.required().sizeOf(2);
+        mapSchema.required().sizeof(2);
 
         assertThat(
                 mapSchema.isValid(null))
