@@ -6,18 +6,18 @@ public final class NumberSchema extends BaseSchema {
     public NumberSchema required() {
         setIsRequiredOn();
         Predicate<Object> required = o -> o instanceof Integer;
-        addRule(required);
+        addFirstRule(required);
         return this;
     }
 
     public NumberSchema positive() {
-        Predicate<Object> positive = o -> o instanceof Integer i && i > 0;
+        Predicate<Object> positive = o -> (int) o > 0;
         addRule(positive);
         return this;
     }
 
     public NumberSchema range(int min, int max) {
-        Predicate<Object> contains = o -> o instanceof Integer i && i >= min && i <= max;
+        Predicate<Object> contains = o -> (int) o >= min && (int) o <= max;
         addRule(contains);
         return this;
     }
