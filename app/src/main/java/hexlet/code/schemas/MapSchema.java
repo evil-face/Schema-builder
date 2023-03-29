@@ -7,12 +7,12 @@ public final class MapSchema extends BaseSchema {
     public MapSchema required() {
         setIsRequiredOn();
         Predicate<Object> required = o -> o instanceof Map;
-        addRule(required);
+        addFirstRule(required);
         return this;
     }
 
     public MapSchema sizeof(int size) {
-        Predicate<Object> sizeOf = o -> o instanceof Map m && m.size() == size;
+        Predicate<Object> sizeOf = o -> ((Map) o).size() == size;
         addRule(sizeOf);
         return this;
     }
