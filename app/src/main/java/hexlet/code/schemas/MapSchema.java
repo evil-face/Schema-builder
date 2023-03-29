@@ -22,13 +22,18 @@ public final class MapSchema extends BaseSchema {
             return this;
         }
 
-        for (var ruleSet : shapeRules.entrySet()) {
-            String name = ruleSet.getKey();
-            BaseSchema rule = ruleSet.getValue();
-            Predicate<Object> shape = o -> o instanceof Map m && rule.isValid(m.get(name));
-            addRule(shape);
-        }
+        Predicate<Object> shape = o -> {
+            for (var ruleSet : shapeRules.entrySet()) {
+                String name = ruleSet.getKey();
+                BaseSchema rule = ruleSet.getValue();
+                if (!rule.isValid(((Map) o).get(name))) {
+                    return false;
+                }
+            }
+            return true;
+        };
 
+        addRule(shape);
         return this;
     }
 }
