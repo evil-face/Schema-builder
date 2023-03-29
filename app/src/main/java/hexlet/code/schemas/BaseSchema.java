@@ -24,6 +24,10 @@ public class BaseSchema {
         this.rules.add(newRule);
     }
 
+    protected final void addFirstRule(Predicate<Object> newRule) {
+        this.rules.add(0, newRule);
+    }
+
     protected final List<Predicate<Object>> getRules() {
         return this.rules;
     }
